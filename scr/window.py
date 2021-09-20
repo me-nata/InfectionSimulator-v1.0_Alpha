@@ -66,11 +66,11 @@ start.pack()
 canvas.pack()
 
 #drawing definitions
-square_size=20
+square_size=10
 
 #simulator definitions
 population = Population((canvas_sizex, canvas_sizey), simulation_square_size=square_size) 
-corona     = Virus(infection_rate=8, lethality=10)
+corona     = Virus(infection_rate=10, lethality=10)
 cell       = Cells(canvas)
 
 #contamination functions
@@ -85,7 +85,7 @@ def startSimulator():
     delay = scale.get()
     start.config(text='restart')
 
-    while not population.virusEradicate() or population.extinctPopulation():
+    while len(population.infected) != 0:
         population.updatePandemicInformation(corona)
         cell.updateCellsState(population=population)
         sleep(delay)

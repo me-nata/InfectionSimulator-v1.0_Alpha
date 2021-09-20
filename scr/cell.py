@@ -21,14 +21,10 @@ class Cells:
 
     def updateCellsState(self, population):
 
-        print('='*10)
-
         self._newinfected = list(set(population.infected).difference(self._newinfected))
         self._newhealed   = list(set(population._healed).difference(self._newhealed))
         self._newcritical = list(set(population._critical_stage).difference(self._newcritical))
         self._newdeath    = list(set(population._death).difference(self._newdeath))
-
-        print(f'd intessec h: {set(self._newdeath).intersection(self._newhealed)}')
 
         for infected in self._newinfected:
             self.__changeState(self.cells[infected[0]][infected[1]], CONTAMITED)
@@ -43,11 +39,6 @@ class Cells:
             self.__changeState(self.cells[death[0]][death[1]], DEAD)
 
         self.canvas.update()
-        #print('='*10)
-        #print(f'death: {len(self._newdeath)}')
-        #print(f'infectados: {len(self._newinfected)}')
-        #print(f'healed: {len(self._newhealed)}')
-        #print(f'criticos: {len(self._newcritical)}')
 
     def initializeCells(self, population):
         i = 0

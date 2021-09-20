@@ -21,7 +21,6 @@ class Population:
         sizey = ceil(window_canvas_size[1]/simulation_square_size)
 
         self.population_size  = sizex*sizey
-        print(f'{sizex}x{sizey}')
     
         for x in range(sizex):
             self.population.append([])
@@ -100,7 +99,7 @@ class Population:
     def extinctPopulation(self):
         return self.population_size == 0
 
-    def _checkInfection(self, virus=Virus(), contact_probability=70, contact_probability_isolated=30):
+    def _checkInfection(self, virus=Virus(), contact_probability=100, contact_probability_isolated=30):
         
         new_infected = []
 
@@ -131,11 +130,11 @@ class Population:
                         if self.population[coord_neighbors[0]][coord_neighbors[1]].isolated():
                             contact = contact_probability_isolated
                   
-                        if contact > random()*100:
+                        if contact <= random()*100:
                             if self.contactBetweenIndividuals(virus, self.population[i][j], 
                                                                 self.population[coord_neighbors[0]][coord_neighbors[1]]):
 
-                                new_infected.append((coord_neighbors[0], coord_neighbors[1]), )
+                                new_infected.append((coord_neighbors[0], coord_neighbors[1]))
 
 
         for coord in new_infected:
@@ -167,7 +166,7 @@ class Population:
 
     def _checkCriticalWorsening(self):
         for coord_individual in self.infected:
-
+            
             i = coord_individual[0]
             j = coord_individual[1]
 
@@ -200,6 +199,6 @@ class Population:
         
         self._rounds += 1
         self._checkInfection(virus, contact_probability, contact_probability_isolated)
-        self._checkCriticalWorsening()
         self._checkCurePopulation(virus, recuperation_in_critical_stage)
+        self._checkCriticalWorsening()
         self._checkDeath(virus)
